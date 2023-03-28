@@ -5,61 +5,94 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class StudentRepository {
-    HashMap<String , Student> studentdb = new HashMap<>();
-    HashMap<String , Teacher> teacherdb = new HashMap<>();
-    HashMap<String , List<String>> student_teacherdb = new HashMap<>();
+
+    HashMap<String,Student> studentDb = new HashMap<>();
+
+    HashMap<String,Teacher> teacherDb = new HashMap<>();
+
+    HashMap<String,List<String>> teacherStudent = new HashMap<>();
+
 
     public void addStudent(Student student){
-        studentdb.put(student.getName(),student);
+
+        String key = student.getName();
+        studentDb.put(key,student);
+        return ;
     }
+
     public void addTeacher(Teacher teacher){
-        teacherdb.put(teacher.getName(),teacher);
+
+        String key = teacher.getName();
+        teacherDb.put(key,teacher);
+        return ;
     }
-    public void addStudentTeacherPair(String student , String teacher){
-        if(student_teacherdb.containsKey(teacher)){
-            List<String> teacher_list = student_teacherdb.get(teacher);
-            teacher_list.add(student);
-            student_teacherdb.put(teacher,teacher_list);
-        }else{
-            List<String> teacher_list = new ArrayList<>();
-            teacher_list.add(student);
-            student_teacherdb.put(teacher,teacher_list);
+
+    public void addStudentTeacherPair(String student,String teacher){
+
+        List<String> students = teacherStudent.get(teacher);
+
+        if(students==null){
+            students = new ArrayList<>();
         }
+
+        students.add(student);
+
+        teacherStudent.put(teacher,students);
+
+
+        return ;
     }
-    public Student getStudentByName(String name){
-        return studentdb.get(name);
-    }
-    public Teacher getTeacherByName(String name){
-        return  teacherdb.get(name);
-    }
-    public List<String> getStudentByTeacherName(String teacher){
-        return student_teacherdb.get(teacher);
-    }
-    public List<String> getAllStudent(){
-        List<String> list = new ArrayList<>();
-        for(String s : studentdb.keySet()){
-            list.add(s);
+
+    public void removeTeacher(String teacher){
+
+        for(String str : teacherStudent.get(teacher)){
+
+            studentDb.remove(str);
+
         }
-        return list;
+        teacherStudent.remove(teacher);
+        teacherDb.remove(teacher);
     }
-    public void deleteTeacherByName(String teacher){
-        List<String> student_list = student_teacherdb.get(teacher);
-        for(String s : student_list){
-            studentdb.remove(s);
-        }
-        teacherdb.remove(teacher);
-        student_teacherdb.remove(teacher);
-    }
-    public void deleteAllTeachers() {
-        for (List<String> student_list : student_teacherdb.values()) {
-            for (String s : student_list) {
-                studentdb.remove(s);
+
+    public void removeAllTeacher(){
+
+
+        for(String teacher : teacherDb.keySet())
+        {
+            for(String str : teacherStudent.get(teacher)){
+
+                studentDb.remove(str);
+
             }
-            teacherdb.clear();
-            student_teacherdb.clear();
+            teacherStudent.remove(teacher);
+            teacherDb.remove(teacher);
+
         }
+    }
+
+    public Student getStudentByName(String name){
+        return studentDb.get(name);
+    }
+
+    public Teacher getTeacherByName(String name){
+        return teacherDb.get(name);
+    }
+
+    public List<String> getStudentsByTeacherName(String teacher){
+        return teacherStudent.get(teacher);
+    }
+
+    public List<String> getAllStudents(){
+
+        List<String> students = new ArrayList<>();
+
+        for(String s : studentDb.keySet()){
+            students.add(s);
+        }
+        return students;
     }
 }
