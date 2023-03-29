@@ -19,8 +19,8 @@ public class StudentRepository {
 
     public void addStudent(Student student){
 
-        String key = student.getName();
-        studentDb.put(key,student);
+        String keyName = student.getName();
+        studentDb.put(keyName,student);
         return ;
     }
 
