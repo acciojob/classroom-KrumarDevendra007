@@ -10,11 +10,11 @@ import java.util.Map;
 @Repository
 public class StudentRepository {
 
-    public HashMap<String,Student> studentDb = new HashMap<>();
+     HashMap<String,Student> studentDb = new HashMap<>();
 
-    public HashMap<String,Teacher> teacherDb = new HashMap<>();
+     HashMap<String,Teacher> teacherDb = new HashMap<>();
 
-   public  HashMap<String,List<String>> teacherStudent = new HashMap<>();
+     HashMap<String,List<String>> teacherStudent = new HashMap<>();
 
 
     public void addStudent(Student student){
