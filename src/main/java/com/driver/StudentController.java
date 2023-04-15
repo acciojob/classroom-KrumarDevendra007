@@ -25,22 +25,22 @@ public class StudentController {
     @PostMapping("/add-student")
     public ResponseEntity<String> addStudent(@RequestBody Student student){
 
-        studentService.addStudent(student);
-        return new ResponseEntity<>("New student added successfully", HttpStatus.CREATED);
+        String studentAdded = studentService.addStudent(student);
+        return new ResponseEntity<>(studentAdded, HttpStatus.CREATED);
     }
 
     @PostMapping("/add-teacher")
     public ResponseEntity<String> addTeacher(@RequestBody Teacher teacher){
 
-        studentService.addTeacher(teacher);
-        return new ResponseEntity<>("New teacher added successfully", HttpStatus.CREATED);
+        String teacherAdded = studentService.addTeacher(teacher);
+        return new ResponseEntity<>(teacherAdded, HttpStatus.CREATED);
     }
 
     @PutMapping("/add-student-teacher-pair")
     public ResponseEntity<String> addStudentTeacherPair(@RequestParam String student, @RequestParam String teacher){
 
-        studentService.addStudentTeacherPair(student,teacher);
-        return new ResponseEntity<>("New student-teacher pair added successfully", HttpStatus.CREATED);
+        String pair = studentService.addStudentTeacherPair(student,teacher);
+        return new ResponseEntity<>(pair, HttpStatus.CREATED);
     }
 
     @GetMapping("/get-student-by-name/{name}")

@@ -12,19 +12,22 @@ public class StudentService {
     @Autowired
     StudentRepository studentRepository;
 
-    public void addStudent(Student student){
+    public String addStudent(Student student){
 
         studentRepository.addStudent(student);
+        return "New student added succesfully";
     }
 
-    public void addTeacher(Teacher teacher){
+    public String addTeacher(Teacher teacher){
 
         studentRepository.addTeacher(teacher);
+        return "New teacher added successfully";
     }
 
-    public void addStudentTeacherPair(String student,String  teacher){
+    public String addStudentTeacherPair(String student,String  teacher){
 
         studentRepository.addStudentTeacherPair(student,teacher);
+        return "New student-teacher pair added successfully";
     }
 
     public void removeTeacher(String teacher){
